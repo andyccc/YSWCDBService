@@ -180,11 +180,13 @@
 
 - (void)configTable
 {
+    NSLog(@"configTables -> %@", _dbPath);
+
+    [self createTable:NSClassFromString(@"WCDBKVStorageItem")];
+
     SEL sel = NSSelectorFromString(@"configTables");
     if ([self respondsToSelector:sel]) {
         NSArray<Class<WCTTableCoding>> *tables = [self performSelector:sel];
-        
-        [self createTable:NSClassFromString(@"WCDBKVStorageItem")];
         
         if (tables && [tables count] > 0) {
             for (Class cls in tables) {
