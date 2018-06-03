@@ -8,12 +8,23 @@
 
 #import "WCDBTableBase+WCDBService.h"
 
+@interface WCDBTableBase () {
+    int _wcdbid;
+}
+//主键id
+@property int wcdbid;
+
+@end
+
+
 @implementation WCDBTableBase
 
 WCDB_IMPLEMENTATION(WCDBTableBase)
 WCDB_SYNTHESIZE(WCDBTableBase, wcdbid)
 WCDB_INDEX(WCDBTableBase, "_index", wcdbid)
 WCDB_PRIMARY_AUTO_INCREMENT(WCDBTableBase, wcdbid)
+
+@dynamic wcdbid;
 
 - (instancetype)init
 {
@@ -32,6 +43,16 @@ WCDB_PRIMARY_AUTO_INCREMENT(WCDBTableBase, wcdbid)
 + (NSString *)tableName
 {
     return NSStringFromClass(self);
+}
+
+- (void)setWcdbid:(int)wcdbid
+{
+    _wcdbid = wcdbid;
+}
+
+- (int)wcdbid
+{
+    return _wcdbid;
 }
 
 @end

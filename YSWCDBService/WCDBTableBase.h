@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface WCDBTableBase : NSObject
-//主键id
-@property (nonatomic, assign) int wcdbid;
 
 - (NSString *)tableName;
 + (NSString *)tableName;
+
+- (int)wcdbid;
+- (void)setWcdbid:(int)wcdbid;
 
 @end
