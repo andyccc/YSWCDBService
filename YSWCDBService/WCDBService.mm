@@ -228,15 +228,15 @@ static NSMutableArray *    __allTableClass = nil;
 {
     NSString *tableName = [cls tableName];
     /*
-     CREATE TABLE messsage (localID INTEGER PRIMARY KEY,
+     CREATE TABLE messsage
+     (localID INTEGER PRIMARY KEY,
      content TEXT,
      createTime BLOB,
      modifiedTime BLOB)
      */
-    BOOL result = [_wcdb createTableAndIndexesOfName:tableName
-                                              withClass:cls];
+    BOOL result = [_wcdb createTableAndIndexesOfName:tableName withClass:cls];
     
-    NSLog(@"create table : %@ -> %@",tableName,result?@"ok":@"fail");
+    NSLog(@"create table : %@[%@] -> %@",cls,tableName,result?@"ok":@"fail");
 }
 
 - (void)repair
