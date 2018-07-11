@@ -55,4 +55,10 @@ WCDB_PRIMARY_AUTO_INCREMENT(WCDBTableBase, wcdbid)
     return _wcdbid;
 }
 
+//+ (void)load
+//{
+//    [self registerTableClass:self];
+//}
+
+
 @end

@@ -7,15 +7,20 @@
 //
 
 #import "WCDBService_WCTDatabase.h"
+#import "WCDBTableBase.h"
+#import "WCDBTableCoding.h"
 
 #define __SQLITE_CORRUPT (11)
 #define __SQLITE_NOTADB  (26)
 
+static NSMutableArray *    __allTableClass = nil;
 
 @interface WCDBService()
 {
     BOOL repairing;
 }
+
+//@property (nonatomic, strong) NSMutableArray *allTableClass;
 
 @end
 
@@ -178,41 +183,50 @@
     return [NSString stringWithFormat:@"%@/%@",self.dbRootPath,name];
 }
 
-- (void)configTable
-{
-    NSLog(@"configTables -> %@", _dbPath);
-
-    [self createTable:NSClassFromString(@"WCDBKVStorageItem")];
-
-    SEL sel = NSSelectorFromString(@"configTables");
-    if ([self respondsToSelector:sel]) {
-        NSArray<Class<WCTTableCoding>> *tables = [self performSelector:sel];
-        
-        if (tables && [tables count] > 0) {
-            for (Class cls in tables) {
-                if ([cls isKindOfClass:[NSString class]]) {
-                    Class cls1 = NSClassFromString(cls);
-                    if (cls1) {
-                        [self createTable:cls1];
-                    }else{
-                        NSLog(@"create table :%@ -> fail, not found",cls);
-                    }
-                }else{
-                    [self createTable:cls];
-                }
-            }
-        }
-    }
-}
-
 - (NSArray *)configTables
 {
     return nil;
 }
 
-- (void)createTable:(Class<WCTTableCoding>)cls
+- (void)configTable
 {
-    NSString *tableName = NSStringFromClass(cls);
+    NSLog(@"configTables -> %@", _dbPath);
+
+#if ENABLE_AUTO_REGISTER_TABLE_CLASS
+    NSArray<Class<WCTTableCoding>> *tables = [[self class] allTableClass];
+    [self createTables:tables];
+#else
+    SEL sel = NSSelectorFromString(@"configTables");
+    if ([self respondsToSelector:sel]) {
+        NSArray<Class<WCTTableCoding>> *tables = [self performSelector:sel];
+        [self createTables:tables];
+    }
+    [self createTable:NSClassFromString(@"WCDBKVStorageItem")];
+#endif
+
+}
+
+- (void)createTables:(NSArray *)tables
+{
+    if (tables && [tables count] > 0) {
+        for (Class cls in tables) {
+            if ([cls isKindOfClass:[NSString class]]) {
+                Class cls1 = NSClassFromString(cls);
+                if (cls1) {
+                    [self createTable:cls1];
+                } else {
+                    NSLog(@"create table :%@ -> fail, not found",cls);
+                }
+            } else {
+                [self createTable:cls];
+            }
+        }
+    }
+}
+
+- (void)createTable:(Class<WCDBTableCoding>)cls
+{
+    NSString *tableName = [cls tableName];
     /*
      CREATE TABLE messsage (localID INTEGER PRIMARY KEY,
      content TEXT,
@@ -240,7 +254,7 @@
         BOOL ret = [recover removeFilesWithError:&error];//清理重复的
         if (ret) {
             
-        }else{
+        } else {
             
         }
     }];
@@ -258,7 +272,7 @@
 //        NSLog(@"数据库错误文件替换：%d , error:%@" ,ret, error);
 //        if (ret) {
 //        
-//        }else{
+//        } else {
 //            
 //        }
         
@@ -289,6 +303,32 @@
     return [[WCDBService sharedInstance].wcdb runTransaction:^BOOL{
         return block([WCDBService sharedInstance].wcdb); //YES to commit transaction and NO to rollback transaction
     }];
+}
+
+#pragma mark -
+
++ (BOOL)registerTableClass:(Class)cls {
+    if (cls) {
+        if (![self.allTableClass containsObject:cls]) {
+            [self.allTableClass addObject:cls];
+            NSLog(@"registerTableClass : %@", cls);
+            return YES;
+        } else {
+            NSLog(@"registerTableClass : %@, has contains", cls);
+            return NO;
+        }
+    } else {
+        NSLog(@"registerTableClass : is nil ... ");
+        return NO;
+    }
+}
+
++ (NSMutableArray *)allTableClass
+{
+    if (!__allTableClass) {
+        __allTableClass = [NSMutableArray array];
+    }
+    return __allTableClass;
 }
 
 @end

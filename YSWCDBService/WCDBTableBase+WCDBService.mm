@@ -13,6 +13,7 @@
 @implementation WCDBTableBase (WCDBService)
 
 #pragma mark -
+
 - (WCTDatabase *)wcdb
 {
     return self.class.wcdb;
@@ -22,6 +23,15 @@
 {
     return [WCDBService sharedInstance].wcdb;
 }
+
+#pragma mark -
+
++ (BOOL)registerTableClass:(Class)cls
+{
+    return [WCDBService registerTableClass:self];
+}
+
+#pragma mark -
 
 + (NSString *)dbPath
 {

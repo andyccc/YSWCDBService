@@ -10,6 +10,8 @@
 
 @implementation WCDBKVStorageItem
 
+AUTO_REGISTER_TABLE_CLASS()
+
 WCDB_IMPLEMENTATION(WCDBKVStorageItem)
 WCDB_INDEX(WCDBKVStorageItem, "_index", key)
 
@@ -20,5 +22,7 @@ WCDB_SYNTHESIZE(WCDBKVStorageItem, size)
 WCDB_SYNTHESIZE(WCDBKVStorageItem, modTime)
 WCDB_SYNTHESIZE(WCDBKVStorageItem, accessTime)
 WCDB_SYNTHESIZE(WCDBKVStorageItem, extendedData)
+
+
 
 @end

@@ -17,6 +17,8 @@ WCDB_PROPERTY(wcdbid)//删除用
 
 + (WCTDatabase *)wcdb;
 
++ (BOOL)registerTableClass:(Class)cls;
+
 + (NSString *)dbPath;
 
 + (NSString *)dbRootPath;

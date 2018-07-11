@@ -17,6 +17,7 @@
 @property (nonatomic, strong, readonly) NSString *dbPath;
 @property (nonatomic, strong, readonly) NSString *dbName;
 
++ (BOOL)registerTableClass:(Class)cls;
 
 + (void)setDBName:(NSString *)name;
 

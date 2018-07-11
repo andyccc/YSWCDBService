@@ -11,6 +11,9 @@
 
 @protocol WCDBTableCoding <WCTTableCoding>
 
+- (NSString *)tableName;
++ (NSString *)tableName;
+
 - (WCTDatabase *)wcdb;
 
 + (WCTDatabase *)wcdb;

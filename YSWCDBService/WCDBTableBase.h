@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+#define ENABLE_AUTO_REGISTER_TABLE_CLASS 1
+#if ENABLE_AUTO_REGISTER_TABLE_CLASS
+#define AUTO_REGISTER_TABLE_CLASS() \
++ (void)load\
+{\
+[self registerTableClass:self];\
+}
+#else
+#define AUTO_REGISTER_TABLE_CLASS()
+#endif
+
 @interface WCDBTableBase : NSObject
 
 - (NSString *)tableName;
@@ -15,5 +26,7 @@
 
 - (int)wcdbid;
 - (void)setWcdbid:(int)wcdbid;
+
++ (BOOL)registerTableClass:(Class)cls;
 
 @end
