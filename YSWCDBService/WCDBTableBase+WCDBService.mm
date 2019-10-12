@@ -26,13 +26,6 @@
 
 #pragma mark -
 
-+ (BOOL)registerTableClass:(Class)cls
-{
-    return [WCDBService registerTableClass:self];
-}
-
-#pragma mark -
-
 + (NSString *)dbPath
 {
     return [WCDBService sharedInstance].dbPath;

@@ -1,0 +1,9 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/SQLiteRepairKit" "${PODS_ROOT}/Headers/Public/WCDB" "${PODS_ROOT}/Headers/Public/WCDBOptimizedSQLCipher" "${PODS_ROOT}/Headers/Public/YSWCDBService"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SQLiteRepairKit" "${PODS_CONFIGURATION_BUILD_DIR}/WCDB" "${PODS_CONFIGURATION_BUILD_DIR}/WCDBOptimizedSQLCipher" "${PODS_CONFIGURATION_BUILD_DIR}/YSWCDBService"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"SQLiteRepairKit" -l"WCDB" -l"WCDBOptimizedSQLCipher" -l"YSWCDBService" -l"c++" -l"z" -framework "CoreFoundation" -framework "Foundation" -framework "Security" -framework "UIKit"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

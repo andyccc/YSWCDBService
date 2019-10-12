@@ -26,15 +26,6 @@ WCDB_PRIMARY_AUTO_INCREMENT(WCDBTableBase, wcdbid)
 
 @dynamic wcdbid;
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-        
-        
-    }
-    return self;
-}
-
 - (NSString *)tableName
 {
     return [self.class tableName];
@@ -60,5 +51,11 @@ WCDB_PRIMARY_AUTO_INCREMENT(WCDBTableBase, wcdbid)
 //    [self registerTableClass:self];
 //}
 
+#pragma mark -
+
++ (BOOL)registerTableClass:(Class)cls
+{
+    return [WCDBService registerTableClass:self];
+}
 
 @end

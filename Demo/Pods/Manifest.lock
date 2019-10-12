@@ -1,0 +1,32 @@
+PODS:
+  - SQLiteRepairKit (1.2.2):
+    - WCDBOptimizedSQLCipher (~> 1.2.0)
+  - WCDB (1.0.7.5):
+    - SQLiteRepairKit (~> 1.2.0)
+    - WCDBOptimizedSQLCipher (~> 1.2.0)
+  - WCDBOptimizedSQLCipher (1.2.1)
+  - YSWCDBService (1.0.4):
+    - WCDB
+
+DEPENDENCIES:
+  - YSWCDBService (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - SQLiteRepairKit
+    - WCDB
+    - WCDBOptimizedSQLCipher
+
+EXTERNAL SOURCES:
+  YSWCDBService:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SQLiteRepairKit: 35aaae5a8838adb85f5b1eb4d796055be6060a4b
+  WCDB: 8e90babdeb7784c569353a4bd22a66c0a175a882
+  WCDBOptimizedSQLCipher: baf44493b0c7a3d49e97bc5b64a3856f6428ddd1
+  YSWCDBService: d30b8febbb25eb87661109ceada4433476bb38e0
+
+PODFILE CHECKSUM: 0b7429efe6ea5772cc9d7e4a5653f2610fb453ed
+
+COCOAPODS: 1.8.3

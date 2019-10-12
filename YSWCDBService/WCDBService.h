@@ -21,5 +21,4 @@
 
 + (void)setDBName:(NSString *)name;
 
-
 @end

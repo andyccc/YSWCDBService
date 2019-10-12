@@ -10,10 +10,61 @@
 #import "WCDBTableBase.h"
 #import "WCDBTableCoding.h"
 
+#import <dlfcn.h>
+#import <mach-o/dyld.h>
+#import <mach-o/loader.h>
+#import <mach-o/ldsyms.h>
+#import <mach-o/getsect.h>
+
+#ifndef __LP64__
+#define section_ section
+#define mach_header_ mach_header
+#else
+#define section_ section_64
+#define mach_header_ mach_header_64
+#endif
+
+
 #define __SQLITE_CORRUPT (11)
 #define __SQLITE_NOTADB  (26)
 
-static NSMutableArray *    __allTableClass = nil;
+
+#pragma mark -
+
+static void wcdb_table_class_in_dyld(const struct mach_header * mhp, void (^block) (NSString *className)) {
+    const struct mach_header_ *header = (mach_header_*)mhp;
+    unsigned long size = 0;
+    uintptr_t *data = (uintptr_t *)getsectiondata(header, "__DATA", "__WCDBTCLASS", &size);
+    if (data && size > 0) {
+        unsigned long count = size / sizeof(struct WCDBTableClassInfo);
+        struct WCDBTableClassInfo *items = (struct WCDBTableClassInfo *)data;
+        for (int index = 0; index < count; index ++) {
+            NSString *className = [NSString stringWithUTF8String:items[index].className];
+            if (!className) { continue; }
+            if (block) {
+                block(className);
+            }
+        }
+    }
+}
+
+static void dyld_callback(const struct mach_header * mhp, intptr_t slide)
+{
+    wcdb_table_class_in_dyld(mhp, ^(NSString *className) {
+        [WCDBService registerTableClass:className];
+    });
+}
+
+//__attribute__((constructor))
+void loadWCDBTableClass() {
+    _dyld_register_func_for_add_image(dyld_callback);
+}
+
+
+#pragma mark -
+
+
+static NSMutableArray * __allTableClass = nil;
 
 @interface WCDBService()
 {
@@ -47,8 +98,8 @@ static NSMutableArray *    __allTableClass = nil;
         
         [self setConfig];
         
-        //初始化一个默认的数据库
-        [self setDBName:nil];
+        // 初始化一个默认的数据库
+        // [self setDBName:nil];
     }
     return self;
 }
@@ -63,7 +114,6 @@ static NSMutableArray *    __allTableClass = nil;
         NSString *path = [docDir stringByAppendingPathComponent:@"WCDB"];
         _dbRootPath = path;
     }
-
 }
 
 - (void)setConfig
@@ -76,7 +126,7 @@ static NSMutableArray *    __allTableClass = nil;
             NSLog(@"数据库损坏了......");
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 __weak __typeof__(self) weakSelf = self;
-                [self setDBName:_dbName block:^{
+                [self setDBName:self.dbName block:^{
                     __typeof__(self) self = weakSelf;
                     [self.wcdb removeFilesWithError:nil];
                 }];
@@ -155,7 +205,7 @@ static NSMutableArray *    __allTableClass = nil;
     
     // 对于特定的数据库，该接口会覆盖全局监控的注册。
     
-#ifdef DEBUG
+//#ifdef DEBUG
 //    [_wcdb setPerformanceTrace:^(WCTTag tag, NSDictionary<NSString *,NSNumber *> *sqls, NSInteger cost) {
 //        NSLog(@"SQLPerformanceTrace Tag: %d", tag);
 //        [sqls enumerateKeysAndObjectsUsingBlock:^(NSString *sql, NSNumber *count, BOOL *) {
@@ -163,7 +213,7 @@ static NSMutableArray *    __allTableClass = nil;
 //        }];
 //        NSLog(@"SQLPerformanceTrace Total cost %ld nanoseconds", (long) cost);
 //    }];
-#endif
+//#endif
 }
 
 - (NSString *)getDBName:(NSString *)name
@@ -327,6 +377,7 @@ static NSMutableArray *    __allTableClass = nil;
 {
     if (!__allTableClass) {
         __allTableClass = [NSMutableArray array];
+        loadWCDBTableClass();
     }
     return __allTableClass;
 }

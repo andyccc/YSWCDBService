@@ -13,11 +13,8 @@
 
 @property (nonatomic, strong, readonly) WCTDatabase *wcdb;
 
-
 + (void)runWithBlock:(void(^)(WCTDatabase *wcdb))block;
 
 + (BOOL)runWithTransactionBlock:(BOOL(^)(WCTDatabase *wcdb))block;
-
-
 
 @end

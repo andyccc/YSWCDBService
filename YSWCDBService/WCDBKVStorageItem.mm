@@ -8,9 +8,11 @@
 
 #import "WCDBKVStorageItem+WCTTableCoding.h"
 
+AUTO_REGISTER_TABLE_CLASS_LAZY(WCDBKVStorageItem)
+
 @implementation WCDBKVStorageItem
 
-AUTO_REGISTER_TABLE_CLASS()
+//AUTO_REGISTER_TABLE_CLASS()
 
 WCDB_IMPLEMENTATION(WCDBKVStorageItem)
 WCDB_INDEX(WCDBKVStorageItem, "_index", key)
