@@ -12,7 +12,7 @@
 
 /// 结构体，用于编译期注册
 struct WCDBTableClassInfo {
-    char * className;
+    char *className;
 };
 
 #pragma mark -
@@ -30,7 +30,7 @@ struct WCDBTableClassInfo {
         __attribute__((used)) static struct WCDBTableClassInfo WCDBTableClass##_class_ \
         __attribute__ ((used, section ("__DATA, __WCDBTCLASS"))) =\
         {\
-            .className = #_class_,\
+            .className = (char *)#_class_,\
         };
 #else
     #define AUTO_REGISTER_TABLE_CLASS()
