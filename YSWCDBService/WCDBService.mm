@@ -261,7 +261,7 @@ static NSMutableArray * __allTableClass = nil;
     if (tables && [tables count] > 0) {
         for (Class cls in tables) {
             if ([cls isKindOfClass:[NSString class]]) {
-                Class cls1 = NSClassFromString(cls);
+                Class cls1 = NSClassFromString((NSString *)cls);
                 if (cls1) {
                     [self createTable:cls1];
                 } else {
@@ -357,7 +357,7 @@ static NSMutableArray * __allTableClass = nil;
 
 #pragma mark -
 
-+ (BOOL)registerTableClass:(Class)cls {
++ (BOOL)registerTableClass:(id)cls {
     if (cls) {
         if (![self.allTableClass containsObject:cls]) {
             [self.allTableClass addObject:cls];
