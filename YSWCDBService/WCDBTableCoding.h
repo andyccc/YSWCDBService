@@ -2,8 +2,8 @@
 //  WCDBTableCoding.h
 //  Student
 //
-//  Created by yans on 2017/8/31.
-//  Copyright © 2017年 yans. All rights reserved.
+//  Created by andyccc on 2017/8/31.
+//  Copyright © 2017年 andyccc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

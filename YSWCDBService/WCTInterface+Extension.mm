@@ -3,7 +3,7 @@
 //  Student
 //
 //  Created by liu on 2017/9/25.
-//  Copyright © 2017年 yans. All rights reserved.
+//  Copyright © 2017年 andyccc. All rights reserved.
 //
 
 #import "WCTInterface+Extension.h"

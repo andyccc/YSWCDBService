@@ -2,8 +2,8 @@
 //  WCDBKVStorage.m
 //  Student
 //
-//  Created by yans on 2017/12/25.
-//  Copyright © 2017年 yans. All rights reserved.
+//  Created by andyccc on 2017/12/25.
+//  Copyright © 2017年 andyccc. All rights reserved.
 //
 
 #import "WCDBKVStorageItem+WCTTableCoding.h"

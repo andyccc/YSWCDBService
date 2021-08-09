@@ -128,7 +128,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1110;
-				ORGANIZATIONNAME = hzty;
+				ORGANIZATIONNAME = andyccc;
 				TargetAttributes = {
 					25AC36F323501E490048E877 = {
 						CreatedOnToolsVersion = 11.1;
@@ -348,7 +348,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hzty.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andyccc.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -367,7 +367,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = hzty.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andyccc.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

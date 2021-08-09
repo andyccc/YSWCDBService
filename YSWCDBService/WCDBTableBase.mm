@@ -2,8 +2,8 @@
 //  WCTTableBase.m
 //  Student
 //
-//  Created by yans on 2017/8/30.
-//  Copyright © 2017年 yans. All rights reserved.
+//  Created by andyccc on 2017/8/30.
+//  Copyright © 2017年 andyccc. All rights reserved.
 //
 
 #import "WCDBTableBase+WCDBService.h"
